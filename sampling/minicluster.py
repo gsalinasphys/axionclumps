@@ -1,5 +1,6 @@
 from math import pi
 
+import mpmath as mp
 import numpy as np
 
 G = 1.32712e11                  # Newton's constant (km^3/(M_Sun s^2))
@@ -7,7 +8,7 @@ rho_eq = 5.46e-28               # Energy density at MR equality in 10^{-10}*M_Su
 
 
 class AxionMiniclusterNFW:
-    def __init__(self, rCM: np.ndarray, vCM: np.ndarray, mass: float = 1.,
+    def __init__(self, rCM: mp.matrix, vCM: mp.matrix, mass: float = 1.,
                 delta: float = 1.55, c: float = 100., vdisptype: str = 'Maxwell-Boltzmann'):
         self.rCM = rCM                      # Position (km) of center of mass
         self.vCM = vCM                      # Velocity (km/s) of center of mass
@@ -27,7 +28,7 @@ class AxionMiniclusterNFW:
         return self.c*self.rs()
 
     # Density profile in units of 10^{-10}*M_Sun/km^3
-    def rho_prf(self, r: float) -> np.ndarray:
+    def rho_prf(self, r: float) -> float:
         if r <= 0. or r > self.rtrunc():
             return 0.
             
